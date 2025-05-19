@@ -1,0 +1,33 @@
+name: Build Packages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ x86_64-glibc ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Void Linux environment
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xbps
+          git clone https://github.com/void-linux/void-packages.git
+          cd void-packages
+          ./xbps-src binary-bootstrap
+
+      - name: Build package
+        run: |
+          cd void-packages
+          ./xbps-src pkg ignis
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ignis
+          path: void-packages/hostdir/binpkgs
