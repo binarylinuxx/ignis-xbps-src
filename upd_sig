@@ -1,0 +1,4 @@
+#!/bin/fish
+xbps-rindex -a pkgs/*.xbps
+xbps-rindex --sign --signedby 'binarylinuxx <aar58384@gmail.com>' --privkey privkey.pem pkgs/
+
