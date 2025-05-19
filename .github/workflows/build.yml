@@ -13,7 +13,7 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+     #   uses: actions/checkout@v3
         
       - name: Set up Void Linux environment
         run: |
@@ -27,7 +27,7 @@ jobs:
           ./xbps-src pkg ignis
           
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+    #    uses: actions/upload-artifact@v3
         with:
           name: ignis-package
           path: pkgs/
