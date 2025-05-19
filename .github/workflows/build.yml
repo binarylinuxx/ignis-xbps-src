@@ -1,29 +1,48 @@
-name: Build Packages
+name: Build XBPS Package
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ x86_64-glibc ]
+    branches:
+      - x86_64-glibc
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: voidlinux/voidlinux-full:latest
-    
+    container:
+      image: voidlinux/void-linux:latest
+      options: --privileged # Required for chroot setup
+
     steps:
+      # Install required tools and dependencies
+      - name: Install prerequisites
+        run: |
+          xbps-install -Syu
+          xbps-install -Sy git base-devel xtools
+
+      # Checkout your repository
       - name: Checkout repository
-        uses: actions/checkout@v4  # Обновлено до v4
-        
-      - name: Set up Void Linux environment
+        uses: actions/checkout@v4
+
+      # Clone void-packages and copy your template
+      - name: Setup void-packages and copy template
         run: |
           git clone https://github.com/void-linux/void-packages.git
+          cp -r srcpkgs/ignis void-packages/srcpkgs/
           cd void-packages
           ./xbps-src binary-bootstrap
+
+      # Build the package
+      - name: Build XBPS package
+        run: |
+          cd void-packages
           ./xbps-src pkg ignis
-          
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4  # Обновлено до v4
+
+      # Upload the built package as an artifact
+      - name: Upload XBPS package
+        uses: actions/upload-artifact@v4
         with:
-          name: ignis-package
+          name: ignis-xbps-package
           path: pkgs/
