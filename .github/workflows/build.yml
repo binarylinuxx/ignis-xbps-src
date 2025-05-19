@@ -13,21 +13,17 @@ jobs:
     
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Обновлено до v4
         
       - name: Set up Void Linux environment
         run: |
           git clone https://github.com/void-linux/void-packages.git
           cd void-packages
           ./xbps-src binary-bootstrap
-          
-      - name: Build package
-        run: |
-          cd void-packages
           ./xbps-src pkg ignis
           
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4  # Обновлено до v4
         with:
           name: ignis-package
-          path: pkgs/
+          path: void-packages/binpkgs/
