@@ -118,3 +118,4 @@ $ ./xbps-src pkg ignis
 ```
 $ sudo xbps-install -R hostdir/binpkgs ignis
 ```
+также можете пойти на branch x86_64-glibc но если хотите самое новое лучше компилить 
