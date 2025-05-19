@@ -20,10 +20,14 @@ jobs:
           git clone https://github.com/void-linux/void-packages.git
           cd void-packages
           ./xbps-src binary-bootstrap
+          
+      - name: Build package
+        run: |
+          cd void-packages
           ./xbps-src pkg ignis
           
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: ignis-package
           path: pkgs/
