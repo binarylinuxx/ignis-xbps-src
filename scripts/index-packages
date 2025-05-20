@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# Sometimes xbps-src builds a bunch of other junk I don't want to be liable for distributing
+
+COMMAND="
+  mkdir /work/packages
+  
+  cp /work/hostdir/binpkgs/ignis*.xbps /work/packages
+
+  cd /work/packages
+  xbps-rindex -a *
+"
+echo "Running command: $COMMAND"
+sh -c "$COMMAND"
