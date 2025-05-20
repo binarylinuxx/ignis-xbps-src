@@ -1,48 +1,62 @@
-name: Build XBPS Package
+name: "Build Latest Packages"
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - x86_64-glibc
+      - master
+  workflow_dispatch:
 
 jobs:
   build:
+    name: Build Hyprland
     runs-on: ubuntu-latest
+
     container:
-      image: voidlinux/void-linux:latest
-      options: --privileged # Required for chroot setup
+      image: ghcr.io/void-linux/void-glibc-full:20250227R1
+      options: --platform linux/amd64 --privileged
+
+    strategy:
+      matrix:
+        arch: [ x86_64, x86_64-musl, aarch64, aarch64-musl ]
+    env:
+      REPO_OWNER: "${{ github.repository_owner }}"
+      REPO_NAME: "${{ github.event.repository.name }}"
+      TARGET_ARCH: "${{ matrix.arch }}"
+      SCRIPT_DIR: "/work/${{ github.event.repository.name }}/scripts"
+      BUILD_ARGS: ""
 
     steps:
-      # Install required tools and dependencies
-      - name: Install prerequisites
+      - name: Prepare container and create a non-root user
         run: |
-          xbps-install -Syu
-          xbps-install -Sy git base-devel xtools
+          mkdir -p /etc/xbps.d && cp /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
+          sed -i 's|repo-default|repo-ci|g' /etc/xbps.d/*-repository-*.conf
+          xbps-install -Syu xbps && xbps-install -yu && xbps-install -y sudo bash grep curl git kotlin-bin
+          useradd -G xbuilder -M builder
 
-      # Checkout your repository
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # Clone void-packages and copy your template
-      - name: Setup void-packages and copy template
+      - name: Clone hyprland-void repo
         run: |
-          git clone https://github.com/void-linux/void-packages.git
-          cp -r srcpkgs/ignis void-packages/srcpkgs/
-          cd void-packages
-          ./xbps-src binary-bootstrap
+          mkdir /work && cd /work
+          git clone https://github.com/$REPO_OWNER/$REPO_NAME.git
+          $SCRIPT_DIR/set-environment
 
-      # Build the package
-      - name: Build XBPS package
+      - name: Automatically generate a build order
+        run: $SCRIPT_DIR/generate-build-order.kts
+
+      - name: Prepare void-packages
+        run: $SCRIPT_DIR/clone-and-prepare
+
+      - name: Build packages
+        run: $SCRIPT_DIR/build-packages
+
+      - name: Copy relevant packages for indexing and signing
         run: |
-          cd void-packages
-          ./xbps-src pkg ignis
+          export PEM_PAT=${{ secrets.PEM_PAT }}
+          export XBPS_PASSPHRASE=${{ secrets.PRIVATE_PEM_PASSPHRASE }}
+          export XBPS_TARGET_ARCH=${{ env.TARGET_ARCH }}
+          sudo -Eu builder $SCRIPT_DIR/index-packages
+          sudo -Eu builder $SCRIPT_DIR/sign-packages
 
-      # Upload the built package as an artifact
-      - name: Upload XBPS package
-        uses: actions/upload-artifact@v4
-        with:
-          name: ignis-xbps-package
-          path: pkgs/
+      - name: Push new packages to binary repository
+        run: |
+          export ACCESS_GIT=${{ secrets.ACCESS_GIT }}
+          sudo -Eu builder $SCRIPT_DIR/push-repository
