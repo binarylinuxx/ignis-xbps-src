@@ -2,23 +2,23 @@
 xbps-src template for [ignis widgets framework](https://github.com/linkfrg/ignis)
 
 # EN - English
-> ![NOTE]
-> this repo provide only stable version of ignis if you want the latest
-> go to -> [ignis-install-page](https://linkfrg.github.io/ignis/stable/user/installation.html)
+> **Note**  
+> This repo provides only stable version of ignis. If you want the latest version,
+> go to → [ignis-install-page](https://linkfrg.github.io/ignis/stable/user/installation.html)
 
 To install this template:
-```
+```bash
 $ git clone https://github.com/void-linux/void-packages.git
 ```
 The Void Linux package repository is quite large, so be prepared to wait depending on your internet connection.
 
 Next:
-```
+```bash
 $ cd void-packages/
 $ ./xbps-src --binary-bootstrap
 ```
 Then:
-```
+```bash
 $ mkdir -p srcpkgs/ignis
 ```
 Download the template directly from this repository and place it in your srcpkgs/ignis directory.
@@ -26,7 +26,7 @@ The location depends on where you cloned the repository. In my case it's ~/.loca
 But you'll need to check where you cloned it.
 
 Alternatively, you can simply create the template with the following content:
-```
+```bash
 pkgname=ignis
 version=0.5
 revision=2
@@ -56,39 +56,41 @@ post_install() {
 }
 ```
 Once the template is ready:
-```
+```bash
 $ ./xbps-src pkg ignis
 ```
 Wait for the build to complete, and when it's done:
-```
+```bash
 $ sudo xbps-install -R hostdir/binpkgs ignis
 ```
-# RU - русский
-> ![NOTE]
-> этот пакет не дает самое новую версию сам шаблон под стабильную если хотите самое новое
-> то вам тута -> [установка-игниса](https://linkfrg.github.io/ignis/stable/user/installation.html)
 
-чтобы установить даный шаблон
-```
+# RU - Русский
+> **Примечание**  
+> Этот пакет предоставляет только стабильную версию ignis. Если хотите самую новую версию,
+> то вам тута → [установка-игниса](https://linkfrg.github.io/ignis/stable/user/installation.html)
+
+Чтобы установить данный шаблон:
+```bash
 $ git clone https://github.com/void-linux/void-packages.git
 ```
-репозиторий пакетов у воида достатачно большой так что будь готов подождать зависит от интернета
+Репозиторий пакетов у Void достаточно большой, так что будь готов подождать (зависит от интернета).
 
-далее
-```
+Далее:
+```bash
 $ cd void-packages/
 $ ./xbps-src --binary-bootstrap
 ```
 
-дальше
-```
+Дальше:
+```bash
 $ mkdir -p srcpkgs/ignis
 ```
-скачайте шаблон прямо из этого репозитория и вставте туда где у вас srcpkgs/ignis
-зависит от того куда склонировали репозиторий в моем случае ~/.local/pkgs/void-packages/srcpkgs/ignis
-ну а ты сам смотри где ты склонировал
-так же можно просто прописать данный шаблон:
-```
+Скачайте шаблон прямо из этого репозитория и вставьте туда, где у вас srcpkgs/ignis.
+Зависит от того, куда склонировали репозиторий. В моем случае ~/.local/pkgs/void-packages/srcpkgs/ignis
+Ну а ты сам смотри, где ты склонировал.
+
+Также можно просто прописать данный шаблон:
+```bash
 pkgname=ignis
 version=0.5
 revision=2
@@ -117,13 +119,11 @@ post_install() {
     vlicense LICENSE
 }
 ```
-потом когда шаблон есть и все готово
-```
+Потом, когда шаблон есть и все готово:
+```bash
 $ ./xbps-src pkg ignis
 ```
-ожидайте конца сборки
-и как готово
+Ожидайте конца сборки, и как готово:
+```bash
+$ sudo xbps-install -R hostdir/b
 ```
-$ sudo xbps-install -R hostdir/binpkgs ignis
-```
-также можете пойти на branch x86_64-glibc но если хотите самое новое лучше компилить 
