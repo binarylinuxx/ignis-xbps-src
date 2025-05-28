@@ -2,6 +2,10 @@
 xbps-src template for [ignis widgets framework](https://github.com/linkfrg/ignis)
 
 # EN - English
+> ![NOTE]
+> this repo provide only stable version of ignis if you want the latest
+> go to -> [ignis-install-page](https://linkfrg.github.io/ignis/stable/user/installation.html)
+
 To install this template:
 ```
 $ git clone https://github.com/void-linux/void-packages.git
@@ -60,6 +64,10 @@ Wait for the build to complete, and when it's done:
 $ sudo xbps-install -R hostdir/binpkgs ignis
 ```
 # RU - русский
+> ![NOTE]
+> этот пакет не дает самое новую версию сам шаблон под стабильную если хотите самое новое
+> то вам тута -> [установка-игниса](https://linkfrg.github.io/ignis/stable/user/installation.html)
+
 чтобы установить даный шаблон
 ```
 $ git clone https://github.com/void-linux/void-packages.git
