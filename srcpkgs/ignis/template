@@ -1,5 +1,5 @@
 pkgname=ignis
-version=0.5
+version=0.5.1
 revision=2
 wrksrc="${pkgname}-${version}"
 build_style=meson
@@ -12,14 +12,14 @@ ninja
 pkg-config
 python3
 gobject-introspection
-git"           
+git"
 depends="python3 python3-gobject python3-click python3-cairo python3-loguru gobject-introspection"
 short_desc="A widget framework for building desktop shells, written and configurable in Python."
 maintainer="binarylinuxx <aar58384@gmail.com>"
 license="LGPL-2.1-or-later"
 homepage="https://github.com/linkfrg/ignis"
-distfiles="https://github.com/linkfrg/ignis/archive/refs/tags/v${version}.tar.gz"
-checksum=52c1be35de4ac3cdf952cdd6b21592b6076245720001db7f2e5aef2489f70768
+distfiles="https://github.com/linkfrg/ignis/releases/download/v${version}/ignis-v${version}.tar.gz"
+checksum="3ea240440584f336a31874f79a1e76e3a9f18651ff2ecaac7dab54807c1fd371"
 configure_args="--wrap-mode=forcefallback"
 
 post_install() {

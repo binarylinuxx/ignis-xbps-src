@@ -25,36 +25,6 @@ Download the template directly from this repository and place it in your srcpkgs
 The location depends on where you cloned the repository. In my case it's ~/.local/pkgs/void-packages/srcpkgs/ignis
 But you'll need to check where you cloned it.
 
-Alternatively, you can simply create the template with the following content:
-```bash
-pkgname=ignis
-version=0.5
-revision=2
-wrksrc="${pkgname}-${version}"
-build_style=meson
-makedepends="
-glib-devel
-gtk4-layer-shell-devel
-pulseaudio-devel
-meson
-ninja
-pkg-config
-python3
-gobject-introspection
-git"
-depends="python3 python3-gobject python3-loguru gobject-introspection"
-short_desc="A widget framework for building desktop shells, written and configurable in Python."
-maintainer="binarylinuxx <aar58384@gmail.com>"
-license="LGPL-2.1-or-later"
-homepage="https://github.com/linkfrg/ignis"
-distfiles="https://github.com/linkfrg/ignis/archive/refs/tags/v${version}.tar.gz"
-checksum=52c1be35de4ac3cdf952cdd6b21592b6076245720001db7f2e5aef2489f70768
-configure_args="--wrap-mode=forcefallback"
-
-post_install() {
-    vlicense LICENSE
-}
-```
 Once the template is ready:
 ```bash
 $ ./xbps-src pkg ignis
@@ -89,41 +59,11 @@ $ mkdir -p srcpkgs/ignis
 Зависит от того, куда склонировали репозиторий. В моем случае ~/.local/pkgs/void-packages/srcpkgs/ignis
 Ну а ты сам смотри, где ты склонировал.
 
-Также можно просто прописать данный шаблон:
-```bash
-pkgname=ignis
-version=0.5
-revision=2
-wrksrc="${pkgname}-${version}"
-build_style=meson
-makedepends="
-glib-devel
-gtk4-layer-shell-devel
-pulseaudio-devel
-meson
-ninja
-pkg-config
-python3
-gobject-introspection
-git"
-depends="python3 python3-gobject python3-click python3-cairo python3-loguru gobject-introspection"
-short_desc="A widget framework for building desktop shells, written and configurable in Python."
-maintainer="binarylinuxx <aar58384@gmail.com>"
-license="LGPL-2.1-or-later"
-homepage="https://github.com/linkfrg/ignis"
-distfiles="https://github.com/linkfrg/ignis/archive/refs/tags/v${version}.tar.gz"
-checksum=52c1be35de4ac3cdf952cdd6b21592b6076245720001db7f2e5aef2489f70768
-configure_args="--wrap-mode=forcefallback"
-
-post_install() {
-    vlicense LICENSE
-}
-```
 Потом, когда шаблон есть и все готово:
 ```bash
 $ ./xbps-src pkg ignis
 ```
 Ожидайте конца сборки, и как готово:
 ```bash
-$ sudo xbps-install -R hostdir/b
+$ sudo xbps-install -R hostdir/binpkgs ignis
 ```
