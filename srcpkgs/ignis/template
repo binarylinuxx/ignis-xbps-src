@@ -17,8 +17,8 @@ depends="python3 python3-gobject python3-click python3-cairo python3-loguru gobj
 short_desc="A widget framework for building desktop shells, written and configurable in Python."
 maintainer="binarylinuxx <aar58384@gmail.com>"
 license="LGPL-2.1-or-later"
-homepage="https://github.com/linkfrg/ignis"
-distfiles="https://github.com/linkfrg/ignis/releases/download/v${version}/ignis-v${version}.tar.gz"
+homepage="https://github.com/ignis-sh/ignis"
+distfiles="https://github.com/ignis-sh/ignis/releases/download/v${version}/ignis-v${version}.tar.gz"
 checksum="3ea240440584f336a31874f79a1e76e3a9f18651ff2ecaac7dab54807c1fd371"
 configure_args="--wrap-mode=forcefallback"
 
