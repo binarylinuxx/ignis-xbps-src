@@ -13,7 +13,7 @@ pkg-config
 python3
 gobject-introspection
 git"
-depends="python3 python3-gobject python3-click python3-cairo python3-loguru gobject-introspection"
+depends="python3 python3-gobject python3-click python3-cairo python3-loguru gobject-introspection gtk4-layer-shell-devel"
 short_desc="A widget framework for building desktop shells, written and configurable in Python."
 maintainer="binarylinuxx <aar58384@gmail.com>"
 license="LGPL-2.1-or-later"
